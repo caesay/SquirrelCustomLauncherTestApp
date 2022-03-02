@@ -27,7 +27,7 @@ class Program
             {
                 try
                 {
-                    using var updateMgr = new UpdateManager(updatePath);
+                    using var updateMgr = new GithubUpdateManager(updatePath);
                     updateMgr.KillAllExecutablesBelongingToPackage();
                     updateMgr.FullInstall(progress: (p) => wnd.DisplayText = $"Installing {p}%").GetAwaiter().GetResult();
                 }
@@ -45,7 +45,8 @@ class Program
                 try
                 {
                     // we want squirrel to install to the current folder, so it's a little hacky
-                    using var updateMgr = new UpdateManager(updatePath, portableDirName, AppContext.BaseDirectory);
+                    using var updateMgr = new GithubUpdateManager(
+                        updatePath, applicationIdOverride: portableDirName, localAppDataDirectoryOverride: AppContext.BaseDirectory);
                     updateMgr.KillAllExecutablesBelongingToPackage();
                     if (Directory.Exists(portablePath)) Directory.Delete(portablePath, true);
                     updateMgr.FullInstall(progress: (p) => wnd.DisplayText = $"Installing {p}%").GetAwaiter().GetResult();
