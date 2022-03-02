@@ -30,6 +30,7 @@ class Program
                     using var updateMgr = new GithubUpdateManager(updatePath);
                     updateMgr.KillAllExecutablesBelongingToPackage();
                     updateMgr.FullInstall(progress: (p) => wnd.DisplayText = $"Installing {p}%").GetAwaiter().GetResult();
+                    Environment.Exit(0);
                 }
                 catch (Exception ex)
                 {
@@ -50,6 +51,7 @@ class Program
                     updateMgr.KillAllExecutablesBelongingToPackage();
                     if (Directory.Exists(portablePath)) Directory.Delete(portablePath, true);
                     updateMgr.FullInstall(progress: (p) => wnd.DisplayText = $"Installing {p}%").GetAwaiter().GetResult();
+                    Environment.Exit(0);
                 }
                 catch (Exception ex)
                 {
